@@ -1,0 +1,243 @@
+/* =============================================================
+   table.css — Movies table: headers, rows, clickable filter
+   chips, poster thumbnails, and the hover poster tooltip
+   ============================================================= */
+
+/* ── Table wrapper ── */
+.table-container {
+    overflow-x: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ── Table base ── */
+.movies-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    min-width: 1300px;
+}
+
+/* ── Header cells ── */
+.movies-table th {
+    background: #2c3e50;
+    color: white;
+    padding: 15px 12px;
+    text-align: left;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    white-space: nowrap;
+}
+
+.movies-table th.sortable {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease;
+}
+
+.movies-table th.sortable:hover {
+    background: #34495e;
+}
+
+.movies-table th.sorted {
+    background: #34495e;
+    position: relative;
+}
+
+/* Sort direction arrow */
+.movies-table th.sorted::after {
+    content: "";
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 4px solid transparent;
+}
+
+.movies-table th.sorted.asc::after  { border-bottom-color: white; }
+.movies-table th.sorted.desc::after { border-top-color: white; }
+
+/* ── Body cells ── */
+.movies-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: top;
+}
+
+.movies-table tbody tr {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.movies-table tbody tr:hover {
+    background: #f0f8ff;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+}
+
+/* ── Cell-specific sizing ── */
+.movie-title {
+    font-weight: 600;
+    color: #2c3e50;
+    max-width: 200px;
+    word-wrap: break-word;
+}
+
+.movie-actors,
+.movie-genres,
+.movie-plot,
+.movie-duration,
+.movie-country {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    max-width: 180px;
+    word-wrap: break-word;
+}
+
+.movie-plot {
+    max-width: 250px;
+}
+
+.movie-country {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    max-width: 180px;
+    word-wrap: break-word;
+}
+
+/* ── Clickable filter chips (actors, genres, countries) ── */
+.clickable-filter {
+    color: #667eea;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 3px;
+    padding: 1px 3px;
+    transition: all 0.2s ease;
+    display: inline-block;
+    margin: 1px;
+}
+
+.clickable-filter:hover {
+    background: #667eea;
+    color: white;
+    text-decoration: none;
+}
+
+.clickable-filter:active { transform: scale(0.98); }
+
+/* ── Parental rating chip ── */
+.movie-rating {
+    color: #667eea;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 3px;
+    padding: 2px 6px;
+    transition: all 0.2s ease;
+    display: inline-block;
+    margin: 1px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+}
+
+.movie-rating:hover {
+    background: #667eea;
+    color: white;
+    text-decoration: none;
+}
+
+.movie-rating:active {
+    transform: scale(0.98);
+}
+
+/* Non-clickable variant (when filter mode is off) */
+.movie-rating:not(.clickable-filter) {
+    color: #6c757d;
+    cursor: default;
+    font-weight: normal;
+    background: transparent;
+    border: none;
+}
+
+.movie-rating:not(.clickable-filter):hover { background: transparent; color: #6c757d; }
+
+/* ── Year chip ── */
+.movie-year {
+    color: #667eea;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 3px;
+    padding: 1px 3px;
+    transition: all 0.2s ease;
+    display: inline-block;
+    margin: 1px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.movie-year:hover {
+    background: #667eea;
+    color: white;
+    text-decoration: none;
+}
+
+.movie-year:active {
+    transform: scale(0.98);
+}
+
+.movie-year:not(.clickable-filter) {
+    color: #6c757d;
+    cursor: default;
+    font-weight: normal;
+}
+
+.movie-year:not(.clickable-filter):hover {
+    background: transparent;
+    color: #6c757d;
+}
+
+/* ── Poster thumbnail ── */
+.poster-container {
+    position: relative;
+    display: inline-block;
+}
+
+.poster-thumbnail {
+    width: 60px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid #e9ecef;
+    transition: all 0.2s ease;
+}
+
+.poster-thumbnail:hover {
+    border-color: #667eea;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.poster-placeholder {
+    width: 60px;
+    height: 80px;
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: #6c757d;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.poster-placeholder:hover {
+    border-color: #667eea;
+    background-color: #f0f8ff;
+    transform: scale(1.05);
+}

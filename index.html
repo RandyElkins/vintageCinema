@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Vintage Cinema Database</title>
+        <link rel="stylesheet" href="css/layout.css" />
+        <link rel="stylesheet" href="css/components.css" />
+        <link rel="stylesheet" href="css/table.css" />
+        <link rel="stylesheet" href="css/responsive.css" />
+    </head>
+    <body>
+        <div class="container">
+
+            <!-- Header -->
+            <div class="header">
+                <h1>🎬 Vintage Cinema Database</h1>
+                <p>Explore classic movies from around the world</p>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="stats">
+                <div class="stats-item">
+                    <div class="stats-number" id="totalMovies">--</div>
+                    <div>Total Movies</div>
+                </div>
+                <div class="stats-item">
+                    <div class="stats-number" id="filteredMovies">--</div>
+                    <div>Showing</div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters">
+                <div class="filter-grid">
+
+                    <div class="filter-group">
+                        <label for="searchInput">Search Movies</label>
+                        <div style="position: relative">
+                            <input type="text" id="searchInput" placeholder="Enter movie title..." />
+                            <div class="filter-loading" id="searchLoading"></div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="actorSearchInput">Search Actor</label>
+                        <div class="actor-search-container">
+                            <div style="position: relative">
+                                <input type="text" id="actorSearchInput" placeholder="Type actor name..." autocomplete="off" />
+                                <div class="filter-loading" id="actorLoading"></div>
+                            </div>
+                            <div class="actor-suggestions" id="actorSuggestions"></div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="genreSelect">Filter by Genre</label>
+                        <div style="position: relative">
+                            <select id="genreSelect">
+                                <option value="">All Genres</option>
+                            </select>
+                            <div class="filter-loading" id="genreLoading"></div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="parentalRatingSelect">Filter by Parental Rating</label>
+                        <div style="position: relative">
+                            <select id="parentalRatingSelect">
+                                <option value="">All Ratings</option>
+                            </select>
+                            <div class="filter-loading" id="parentalRatingLoading"></div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="plotSearchInput">Search Plot</label>
+                        <div style="position: relative">
+                            <input type="text" id="plotSearchInput" placeholder="Enter plot keywords..." />
+                            <div class="filter-loading" id="plotLoading"></div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="durationSearchInput">Search Duration</label>
+                        <div style="position: relative">
+                            <input type="text" id="durationSearchInput" placeholder="Enter duration..." />
+                            <div class="filter-loading" id="durationLoading"></div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="countrySelect">Filter by Country</label>
+                        <div style="position: relative">
+                            <select id="countrySelect">
+                                <option value="">All Countries</option>
+                            </select>
+                            <div class="filter-loading" id="countryLoading"></div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="yearMin">Year From</label>
+                        <div style="position: relative">
+                            <input type="number" id="yearMin" placeholder="1900" min="1900" max="2024" />
+                            <div class="filter-loading" id="yearMinLoading"></div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="yearMax">Year To</label>
+                        <div style="position: relative">
+                            <input type="number" id="yearMax" placeholder="2024" min="1900" max="2024" />
+                            <div class="filter-loading" id="yearMaxLoading"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="filter-actions">
+                    <button class="btn btn-secondary" onclick="clearFilters()">Clear All Filters</button>
+
+                    <div class="toggle-container">
+                        <span class="toggle-label">Click Filter Mode:</span>
+                        <div class="toggle-switch" id="filterToggle" onclick="toggleFilterMode()">
+                            <div class="toggle-slider"></div>
+                        </div>
+                        <span class="toggle-description" id="toggleDescription">Currently: Replace filters</span>
+                        <div class="toggle-info">
+                            <div class="toggle-info-icon">?</div>
+                            <div class="toggle-tooltip">
+                                Click actors, genres, countries, parental ratings, or years directly in the table
+                                below to filter instantly! This toggle controls whether clicking an item will
+                                replace all current filters or add to your existing selection. Items with active
+                                filters are highlighted in blue.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="results">
+                <div class="results-header">
+                    <div class="results-info" id="resultsInfo">Loading...</div>
+                    <div class="sort-controls">
+                        <label for="sortSelect">Sort by:</label>
+                        <select id="sortSelect">
+                            <option value="title,ASC">Title (A-Z)</option>
+                            <option value="title,DESC">Title (Z-A)</option>
+                            <option value="parental_rating,ASC">Parental Rating (A-Z)</option>
+                            <option value="parental_rating,DESC">Parental Rating (Z-A)</option>
+                            <option value="year,ASC">Year (Old-New)</option>
+                            <option value="year,DESC">Year (New-Old)</option>
+                            <option value="actors,ASC">Actors (A-Z)</option>
+                            <option value="actors,DESC">Actors (Z-A)</option>
+                            <option value="genres,ASC">Genres (A-Z)</option>
+                            <option value="genres,DESC">Genres (Z-A)</option>
+                            <option value="country,ASC">Country (A-Z)</option>
+                            <option value="country,DESC">Country (Z-A)</option>
+                            <option value="duration,ASC">Duration (Short-Long)</option>
+                            <option value="duration,DESC">Duration (Long-Short)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="loadingDiv" class="loading">Loading movies...</div>
+
+                <div id="tableContainer" class="table-container" style="display: none">
+                    <table class="movies-table">
+                        <thead>
+                            <tr>
+                                <th>Poster</th>
+                                <th class="sortable" onclick="sortBy('title')">Title</th>
+                                <th class="sortable" onclick="sortBy('parental_rating')">Parental Rating</th>
+                                <th class="sortable" onclick="sortBy('year')">Year</th>
+                                <th class="sortable" onclick="sortBy('actors')">Actors</th>
+                                <th class="sortable" onclick="sortBy('genres')">Genres</th>
+                                <th>Plot</th>
+                                <th class="sortable" onclick="sortBy('duration')">Duration</th>
+                                <th class="sortable" onclick="sortBy('country')">Country</th>
+                            </tr>
+                        </thead>
+                        <tbody id="moviesTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div id="noResults" class="no-results" style="display: none">
+                    <h3>No movies found</h3>
+                    <p>Try adjusting your filters or search terms</p>
+                </div>
+
+                <div id="pagination" class="pagination"></div>
+            </div>
+
+        </div>
+
+        <!-- JS modules in dependency order -->
+        <script src="js/data.js"></script>
+        <script src="js/database.js"></script>
+        <script src="js/filters.js"></script>
+        <script src="js/ui-render.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>

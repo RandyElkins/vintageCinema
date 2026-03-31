@@ -1,0 +1,37 @@
+/* =============================================================
+   responsive.css — Mobile & tablet breakpoints
+   ============================================================= */
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .results-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .movies-table {
+        font-size: 0.8rem;
+    }
+
+    .movies-table th,
+    .movies-table td {
+        padding: 8px 6px;
+    }
+
+    .poster-thumbnail {
+        width: 40px;
+        height: 60px;
+    }
+
+    .toggle-container {
+        flex-direction: column;
+        text-align: center;
+    }
+}
